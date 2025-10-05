@@ -18,10 +18,10 @@ CLASS net/minecraft/client/multiplayer/ClientPacketListener
 		ARG 1 information
 	METHOD createEntityFromPacket (Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)Lnet/minecraft/world/entity/Entity;
 		ARG 1 packet
-	METHOD determineLevelLoadingReason (ZLnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/client/gui/screens/ReceivingLevelScreen$Reason;
-		ARG 1 dying
+	METHOD determineLevelLoadingReason (ZLnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/client/gui/screens/LevelLoadingScreen$Reason;
+		ARG 1 fromDeath
 		ARG 2 spawnDimension
-		ARG 3 currentDimension
+		ARG 3 playerDimension
 	METHOD enableChunkLight (Lnet/minecraft/world/level/chunk/LevelChunk;II)V
 		ARG 1 chunk
 		ARG 2 x
@@ -34,7 +34,9 @@ CLASS net/minecraft/client/multiplayer/ClientPacketListener
 		COMMENT Gets the client's description information about another player on the server.
 		ARG 1 name
 	METHOD getPlayerInfo (Ljava/util/UUID;)Lnet/minecraft/client/multiplayer/PlayerInfo;
-		ARG 1 uniqueId
+		ARG 1 uuid
+	METHOD getPlayerInfoIgnoreCase (Ljava/lang/String;)Lnet/minecraft/client/multiplayer/PlayerInfo;
+		ARG 1 playerName
 	METHOD handleAddEntity (Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)V
 		COMMENT Spawns an instance of the objecttype indicated by the packet and sets its position and momentum
 		ARG 1 packet
@@ -212,6 +214,15 @@ CLASS net/minecraft/client/multiplayer/ClientPacketListener
 		ARG 1 command
 		ARG 2 titleKey
 		ARG 3 previousScreen
+	METHOD openSendConfirmationWindow (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/network/chat/Component;Ljava/lang/Runnable;)V
+		ARG 1 command
+		ARG 2 titleKey
+		ARG 3 buttonText
+		ARG 4 onConfirm
+	METHOD openSignedCommandSendConfirmationWindow (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/client/gui/screens/Screen;)V
+		ARG 1 command
+		ARG 2 titleKey
+		ARG 3 previousScreen
 	METHOD postAddEntitySoundInstance (Lnet/minecraft/world/entity/Entity;)V
 		ARG 1 entity
 	METHOD queueLightRemoval (Lnet/minecraft/network/protocol/game/ClientboundForgetLevelChunkPacket;)V
@@ -243,7 +254,7 @@ CLASS net/minecraft/client/multiplayer/ClientPacketListener
 		ARG 1 relatives
 		ARG 2 entity
 		ARG 3 lerp
-	METHOD startWaitingForNewLevel (Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/gui/screens/ReceivingLevelScreen$Reason;)V
+	METHOD startWaitingForNewLevel (Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/gui/screens/LevelLoadingScreen$Reason;)V
 		ARG 1 player
 		ARG 2 level
 		ARG 3 reason

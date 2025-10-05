@@ -1,5 +1,5 @@
 CLASS net/minecraft/server/dedicated/DedicatedServer
-	METHOD <init> (Ljava/lang/Thread;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/server/WorldStem;Lnet/minecraft/server/dedicated/DedicatedServerSettings;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/server/Services;Lnet/minecraft/server/level/progress/ChunkProgressListenerFactory;)V
+	METHOD <init> (Ljava/lang/Thread;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lnet/minecraft/server/packs/repository/PackRepository;Lnet/minecraft/server/WorldStem;Lnet/minecraft/server/dedicated/DedicatedServerSettings;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/server/Services;)V
 		ARG 1 serverThread
 		ARG 2 storageSource
 		ARG 3 packRepository
@@ -7,7 +7,6 @@ CLASS net/minecraft/server/dedicated/DedicatedServer
 		ARG 5 settings
 		ARG 6 fixerUpper
 		ARG 7 services
-		ARG 8 progressListenerFactory
 	METHOD createServerLinks (Lnet/minecraft/server/dedicated/DedicatedServerSettings;)Lnet/minecraft/server/ServerLinks;
 		ARG 0 settings
 	METHOD getCompressionThreshold ()I
@@ -20,27 +19,19 @@ CLASS net/minecraft/server/dedicated/DedicatedServer
 		COMMENT Returns the server message of the day
 	METHOD getServerPort ()I
 		COMMENT Never used, but "getServerPort" is already taken.
-	METHOD getSpawnProtectionRadius ()I
-		COMMENT Return the spawn protection area's size.
 	METHOD handleConsoleInput (Ljava/lang/String;Lnet/minecraft/commands/CommandSourceStack;)V
 		ARG 1 msg
 		ARG 2 source
 	METHOD initServer ()Z
 		COMMENT Initialises the server and starts it.
-	METHOD isCommandBlockEnabled ()Z
-		COMMENT Return whether command blocks are enabled.
 	METHOD isEpollEnabled ()Z
 		COMMENT Get if native transport should be used. Native transport means linux server performance improvements and optimized packet sending/receiving on linux
 	METHOD isPublished ()Z
 		COMMENT Returns {@code true} if this integrated server is open to LAN
-	METHOD isSingleplayerOwner (Lcom/mojang/authlib/GameProfile;)Z
-		ARG 1 profile
 	METHOD isUnderSpawnProtection (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)Z
 		ARG 1 level
 		ARG 2 pos
 		ARG 3 player
-	METHOD lambda$storeUsingWhiteList$4 (ZLnet/minecraft/server/dedicated/DedicatedServerProperties;)Lnet/minecraft/server/dedicated/DedicatedServerProperties;
-		ARG 2 properties
 	METHOD onServerExit ()V
 		COMMENT Directly calls System.exit(0), instantly killing the program.
 	METHOD parseBugReportLink (Lnet/minecraft/server/dedicated/DedicatedServerProperties;)Ljava/util/Optional;
@@ -48,9 +39,37 @@ CLASS net/minecraft/server/dedicated/DedicatedServer
 	METHOD runCommand (Ljava/lang/String;)Ljava/lang/String;
 		COMMENT Handle a command received by an RCon instance
 		ARG 1 command
+	METHOD setAcceptsTransfers (Z)V
+		ARG 1 acceptsTransfers
+	METHOD setAllowFlight (Z)V
+		ARG 1 allowFlight
+	METHOD setDifficulty (Lnet/minecraft/world/Difficulty;)V
+		ARG 1 difficulty
+	METHOD setEntityBroadcastRangePercentage (I)V
+		ARG 1 entityBroadcastRangePercentage
+	METHOD setForceGameMode (Z)V
+		ARG 1 forceGameMode
+	METHOD setGameMode (Lnet/minecraft/world/level/GameType;)V
+		ARG 1 gameMode
+	METHOD setHidesOnlinePlayers (Z)V
+		ARG 1 hidesOnlinePlayers
+	METHOD setMaxPlayers (I)V
+		ARG 1 maxPlayers
+	METHOD setOperatorUserPermissionLevel (I)V
+		ARG 1 operatorUserPermissionLevel
+	METHOD setPauseWhenEmptySeconds (I)V
+		ARG 1 pauseWhenEmptySeconds
 	METHOD setPlayerIdleTimeout (I)V
 		ARG 1 idleTimeout
+	METHOD setRepliesToStatus (Z)V
+		ARG 1 repliesToStatus
+	METHOD setSimulationDistance (I)V
+		ARG 1 simulationDistance
+	METHOD setSpawnProtectionRadius (I)V
+		ARG 1 spawnProtectionRadius
+	METHOD setStatusHeartbeatInterval (I)V
+		ARG 1 statusHeartbeatInterval
+	METHOD setViewDistance (I)V
+		ARG 1 viewDistance
 	METHOD stopServer ()V
 		COMMENT Saves all necessary data as preparation for stopping the server.
-	METHOD storeUsingWhiteList (Z)V
-		ARG 1 isStoreUsingWhiteList

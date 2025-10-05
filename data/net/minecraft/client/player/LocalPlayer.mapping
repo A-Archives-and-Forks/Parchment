@@ -49,6 +49,8 @@ CLASS net/minecraft/client/player/LocalPlayer
 		ARG 1 health
 	METHOD isLocalPlayer ()Z
 		COMMENT Returns whether this is a {@link net.minecraft.client.player.LocalPlayer}.
+	METHOD isSprintingPossible (Z)Z
+		ARG 1 flying
 	METHOD lambda$updateAutoJump$0 (Lnet/minecraft/world/phys/shapes/VoxelShape;)Ljava/util/stream/Stream;
 		ARG 0 voxelShape
 	METHOD magicCrit (Lnet/minecraft/world/entity/Entity;)V
@@ -99,9 +101,6 @@ CLASS net/minecraft/client/player/LocalPlayer
 		ARG 1 permissionLevel
 	METHOD setShowDeathScreen (Z)V
 		ARG 1 show
-	METHOD startRiding (Lnet/minecraft/world/entity/Entity;Z)Z
-		ARG 1 entity
-		ARG 2 force
 	METHOD startUsingItem (Lnet/minecraft/world/InteractionHand;)V
 		ARG 1 hand
 	METHOD suffocatesAt (Lnet/minecraft/core/BlockPos;)Z

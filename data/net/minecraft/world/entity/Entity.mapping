@@ -61,8 +61,6 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD awardKillScore (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V
 		ARG 1 entity
 		ARG 2 damageSource
-	METHOD axisStepOrder (Lnet/minecraft/world/phys/Vec3;)Ljava/lang/Iterable;
-		ARG 0 deltaMovement
 	METHOD baseTick ()V
 		COMMENT Gets called every tick from main Entity class
 	METHOD broadcastToPlayer (Lnet/minecraft/server/level/ServerPlayer;)Z
@@ -107,11 +105,12 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD checkInsideBlocks (Ljava/util/List;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;)V
 		ARG 1 movements
 		ARG 2 stepBasedCollector
-	METHOD checkInsideBlocks (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;Lit/unimi/dsi/fastutil/longs/LongSet;)V
+	METHOD checkInsideBlocks (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;Lit/unimi/dsi/fastutil/longs/LongSet;I)I
 		ARG 1 from
 		ARG 2 to
 		ARG 3 stepBasedCollector
 		ARG 4 visited
+		ARG 5 maxSteps
 	METHOD checkSupportingBlock (ZLnet/minecraft/world/phys/Vec3;)V
 		ARG 1 onGround
 		ARG 2 movement
@@ -124,6 +123,10 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 1 entity
 		ARG 2 horizontalDistance
 		ARG 4 verticalDistance
+	METHOD collectAllColliders (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;
+		ARG 0 entity
+		ARG 1 level
+		ARG 2 boundingBox
 	METHOD collectCandidateStepUpHeights (Lnet/minecraft/world/phys/AABB;Ljava/util/List;FF)[F
 		ARG 0 box
 		ARG 1 colliders
@@ -163,10 +166,11 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 1 entity
 	METHOD createCommandSourceStackForNameResolution (Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/commands/CommandSourceStack;
 		ARG 1 level
-	METHOD debugBlockIntersection (Lnet/minecraft/core/BlockPos;ZZ)V
-		ARG 1 pos
-		ARG 2 isBlock
-		ARG 3 isFluid
+	METHOD debugBlockIntersection (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;ZZ)V
+		ARG 1 level
+		ARG 2 pos
+		ARG 3 inFluid
+		ARG 4 inBlock
 	METHOD defineSynchedData (Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V
 		ARG 1 builder
 	METHOD deflection (Lnet/minecraft/world/entity/projectile/Projectile;)Lnet/minecraft/world/entity/projectile/ProjectileDeflection;
@@ -205,9 +209,11 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 1 object
 	METHOD fillCrashReportCategory (Lnet/minecraft/CrashReportCategory;)V
 		ARG 1 category
-	METHOD forceSetRotation (FF)V
+	METHOD forceSetRotation (FZFZ)V
 		ARG 1 yRot
-		ARG 2 xRot
+		ARG 2 yRelative
+		ARG 3 xRot
+		ARG 4 xRelative
 	METHOD fudgePositionAfterSizeChange (Lnet/minecraft/world/entity/EntityDimensions;)Z
 		ARG 1 dimensions
 	METHOD gameEvent (Lnet/minecraft/core/Holder;)V
@@ -217,6 +223,8 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 2 entity
 	METHOD getAddEntityPacket (Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;
 		ARG 1 entity
+	METHOD getAvailableSpaceBelow (D)D
+		ARG 1 distance
 	METHOD getBlockExplosionResistance (Lnet/minecraft/world/level/Explosion;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;F)F
 		COMMENT Explosion resistance of a block relative to this entity
 		ARG 1 explosion
@@ -256,7 +264,7 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 1 motionScaler
 		ARG 2 facing
 	METHOD getLightProbePosition (F)Lnet/minecraft/world/phys/Vec3;
-		ARG 1 partialTicks
+		ARG 1 partialTick
 	METHOD getLookAngle ()Lnet/minecraft/world/phys/Vec3;
 		COMMENT Returns a (normalized) vector of where this entity is looking.
 	METHOD getMaxFallDistance ()I
@@ -272,7 +280,7 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD getPassengerRidingPosition (Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/Vec3;
 		ARG 1 entity
 	METHOD getPosition (F)Lnet/minecraft/world/phys/Vec3;
-		ARG 1 partialTicks
+		ARG 1 partialTick
 	METHOD getPreciseBodyRotation (F)F
 		ARG 1 partialTick
 	METHOD getPrimaryStepSoundBlockPos (Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;
@@ -290,8 +298,6 @@ CLASS net/minecraft/world/entity/Entity
 		COMMENT Returns the Entity's pitch and yaw as a {@link net.minecraft.world.phys.Vec2}.
 	METHOD getScoreboardName ()Ljava/lang/String;
 		COMMENT Returns a String to use as this entity's name in the scoreboard/entity selector systems
-	METHOD getServer ()Lnet/minecraft/server/MinecraftServer;
-		COMMENT Get the Minecraft server instance
 	METHOD getSharedFlag (I)Z
 		COMMENT Returns {@code true} if the flag is active for the entity. Known flags: 0: burning 1: sneaking 2: unused 3: sprinting 4: swimming 5: invisible 6: glowing 7: elytra flying
 		ARG 1 flag
@@ -305,10 +311,10 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 1 entity
 	METHOD getViewVector (F)Lnet/minecraft/world/phys/Vec3;
 		COMMENT Gets the interpolated look vector.
-		ARG 1 partialTicks
+		ARG 1 partialTick
 	METHOD getViewXRot (F)F
 		COMMENT Returns the current X rotation of the entity.
-		ARG 1 partialTicks
+		ARG 1 partialTick
 	METHOD getViewYRot (F)F
 		COMMENT Returns the current Y rotation of the entity.
 		ARG 1 partialTick
@@ -433,14 +439,12 @@ CLASS net/minecraft/world/entity/Entity
 		COMMENT If at least 1 entity is riding this one
 	METHOD kill (Lnet/minecraft/server/level/ServerLevel;)V
 		ARG 1 level
-	METHOD killedEntity (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)Z
+	METHOD killedEntity (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;)Z
 		ARG 1 level
 		ARG 2 entity
+		ARG 3 damageSource
 	METHOD lambda$checkFallDamage$1 (Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
 		ARG 1 supportingPos
-	METHOD lambda$checkInsideBlocks$0 (Lit/unimi/dsi/fastutil/longs/LongSet;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;Lnet/minecraft/core/BlockPos;I)Z
-		ARG 5 pos
-		ARG 6 index
 	METHOD lambda$isInWall$3 (Lnet/minecraft/world/phys/AABB;Lnet/minecraft/core/BlockPos;)Z
 		ARG 2 pos
 	METHOD lambda$load$2 (Ljava/util/UUID;)V
@@ -450,11 +454,8 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD lerpHeadTo (FI)V
 		ARG 1 yaw
 		ARG 2 pitch
-	METHOD lerpMotion (DDD)V
-		COMMENT Updates the entity motion clientside, called by packets from the server
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
+	METHOD lerpMotion (Lnet/minecraft/world/phys/Vec3;)V
+		ARG 1 deltaMovement
 	METHOD lerpPositionAndRotationStep (IDDDDD)V
 		ARG 1 steps
 		ARG 2 targetX
@@ -488,6 +489,15 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD move (Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V
 		ARG 1 type
 		ARG 2 movement
+	METHOD moveOrInterpolateTo (FF)V
+		ARG 1 yRot
+		ARG 2 xRot
+	METHOD moveOrInterpolateTo (Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V
+		ARG 1 pos
+		ARG 2 yRot
+		ARG 3 xRot
+	METHOD moveOrInterpolateTo (Lnet/minecraft/world/phys/Vec3;)V
+		ARG 1 pos
 	METHOD moveOrInterpolateTo (Lnet/minecraft/world/phys/Vec3;FF)V
 		ARG 1 pos
 		ARG 2 yRot
@@ -523,7 +533,7 @@ CLASS net/minecraft/world/entity/Entity
 		ARG 1 key
 	METHOD pick (DFZ)Lnet/minecraft/world/phys/HitResult;
 		ARG 1 hitDistance
-		ARG 3 partialTicks
+		ARG 3 partialTick
 		ARG 4 hitFluids
 	METHOD placePortalTicket (Lnet/minecraft/core/BlockPos;)V
 		ARG 1 pos
@@ -763,15 +773,12 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD spawnAtLocation (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;
 		ARG 1 level
 		ARG 2 item
-	METHOD spawnAtLocation (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/ItemLike;I)Lnet/minecraft/world/entity/item/ItemEntity;
-		ARG 1 level
-		ARG 2 item
-		ARG 3 yOffset
 	METHOD startRiding (Lnet/minecraft/world/entity/Entity;)Z
 		ARG 1 vehicle
-	METHOD startRiding (Lnet/minecraft/world/entity/Entity;Z)Z
+	METHOD startRiding (Lnet/minecraft/world/entity/Entity;ZZ)Z
 		ARG 1 vehicle
 		ARG 2 force
+		ARG 3 sendGameEvent
 	METHOD startSeenByPlayer (Lnet/minecraft/server/level/ServerPlayer;)V
 		COMMENT Add the given player to the list of players tracking this entity. For instance, a player may track a boss in order to view its associated boss bar.
 		ARG 1 serverPlayer
@@ -800,6 +807,10 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD teleportSetPosition (Lnet/minecraft/world/entity/PositionMoveRotation;Ljava/util/Set;)V
 		ARG 1 positionMovementRotation
 		ARG 2 relatives
+	METHOD teleportSetPosition (Lnet/minecraft/world/entity/PositionMoveRotation;Lnet/minecraft/world/entity/PositionMoveRotation;Ljava/util/Set;)V
+		ARG 1 from
+		ARG 2 to
+		ARG 3 relatives
 	METHOD teleportSpectators (Lnet/minecraft/world/level/portal/TeleportTransition;Lnet/minecraft/server/level/ServerLevel;)V
 		ARG 1 teleportTransition
 		ARG 2 oldLevel
@@ -839,6 +850,14 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD walkingStepSound (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
 		ARG 1 pos
 		ARG 2 state
+	CLASS Movement
+		METHOD <init> (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V
+			ARG 1 from
+			ARG 2 to
+		METHOD <init> (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V
+			ARG 1 from
+			ARG 2 to
+			ARG 3 axisDependentOriginalMovement
 	CLASS MoveFunction
 		METHOD accept (Lnet/minecraft/world/entity/Entity;DDD)V
 			ARG 1 entity

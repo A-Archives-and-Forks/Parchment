@@ -20,7 +20,7 @@ CLASS net/minecraft/world/level/Level
 		ARG 12 zSpeed
 	METHOD addAlwaysVisibleParticle (Lnet/minecraft/core/particles/ParticleOptions;ZDDDDDD)V
 		ARG 1 particle
-		ARG 2 ignoreRange
+		ARG 2 overrideLimiter
 		ARG 3 x
 		ARG 5 y
 		ARG 7 z
@@ -106,7 +106,7 @@ CLASS net/minecraft/world/level/Level
 		ARG 10 radius
 		ARG 11 fire
 		ARG 12 explosionInteraction
-	METHOD explode (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/core/Holder;)V
+	METHOD explode (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/util/random/WeightedList;Lnet/minecraft/core/Holder;)V
 		ARG 1 source
 		ARG 2 damageSource
 		ARG 3 damageCalculator
@@ -118,7 +118,8 @@ CLASS net/minecraft/world/level/Level
 		ARG 12 explosionInteraction
 		ARG 13 smallExplosionParticles
 		ARG 14 largeExplosionParticles
-		ARG 15 explosionSound
+		ARG 15 blockParticles
+		ARG 16 explosionSound
 	METHOD explode (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;Lnet/minecraft/world/phys/Vec3;FZLnet/minecraft/world/level/Level$ExplosionInteraction;)V
 		ARG 1 source
 		ARG 2 damageSource
@@ -172,6 +173,10 @@ CLASS net/minecraft/world/level/Level
 	METHOD getEntity (I)Lnet/minecraft/world/entity/Entity;
 		COMMENT Returns the Entity with the given ID, or null if it doesn't exist in this Level.
 		ARG 1 id
+	METHOD getEntity (Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;
+		ARG 1 uuid
+	METHOD getEntityInAnyDimension (Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;
+		ARG 1 uuid
 	METHOD getFluidState (Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;
 		ARG 1 pos
 	METHOD getHeight (Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I
@@ -182,6 +187,8 @@ CLASS net/minecraft/world/level/Level
 		COMMENT Returns the world's WorldInfo object
 	METHOD getMapData (Lnet/minecraft/world/level/saveddata/maps/MapId;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
 		ARG 1 mapId
+	METHOD getPlayerInAnyDimension (Ljava/util/UUID;)Lnet/minecraft/world/entity/player/Player;
+		ARG 1 uuid
 	METHOD getPushableEntities (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;
 		ARG 1 entity
 		ARG 2 boundingBox
@@ -193,13 +200,19 @@ CLASS net/minecraft/world/level/Level
 		ARG 1 partialTick
 	METHOD getThunderLevel (F)F
 		ARG 1 partialTick
+	METHOD getWorldBorderAdjustedRespawnData (Lnet/minecraft/world/level/storage/LevelData$RespawnData;)Lnet/minecraft/world/level/storage/LevelData$RespawnData;
+		ARG 1 respawnData
 	METHOD globalLevelEvent (ILnet/minecraft/core/BlockPos;I)V
 		ARG 1 id
 		ARG 2 pos
 		ARG 3 data
 	METHOD guardEntityTick (Ljava/util/function/Consumer;Lnet/minecraft/world/entity/Entity;)V
-		ARG 1 consumerEntity
+		ARG 1 action
 		ARG 2 entity
+	METHOD hasEntities (Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Z
+		ARG 1 entityTypeTest
+		ARG 2 bounds
+		ARG 3 predicate
 	METHOD isInSpawnableBounds (Lnet/minecraft/core/BlockPos;)Z
 		ARG 0 pos
 	METHOD isInWorldBounds (Lnet/minecraft/core/BlockPos;)Z
@@ -387,6 +400,8 @@ CLASS net/minecraft/world/level/Level
 	METHOD setRainLevel (F)V
 		COMMENT Sets the strength of the rain.
 		ARG 1 strength
+	METHOD setRespawnData (Lnet/minecraft/world/level/storage/LevelData$RespawnData;)V
+		ARG 1 respawnData
 	METHOD setSkyFlashTime (I)V
 		ARG 1 timeFlash
 	METHOD setSpawnSettings (Z)V

@@ -1,9 +1,12 @@
 CLASS net/minecraft/client/gui/components/AbstractScrollArea
-	METHOD renderScrollbar (Lnet/minecraft/client/gui/GuiGraphics;)V
-		ARG 1 guiGraphics
-	METHOD setScrollAmount (D)V
-		ARG 1 scrollAmount
-	METHOD updateScrolling (DDI)Z
+	METHOD isOverScrollbar (DD)Z
 		ARG 1 mouseX
 		ARG 3 mouseY
-		ARG 5 button
+	METHOD renderScrollbar (Lnet/minecraft/client/gui/GuiGraphics;II)V
+		ARG 1 guiGraphics
+		ARG 2 mouseX
+		ARG 3 mouseY
+	METHOD setScrollAmount (D)V
+		ARG 1 scrollAmount
+	METHOD updateScrolling (Lnet/minecraft/client/input/MouseButtonEvent;)Z
+		ARG 1 event

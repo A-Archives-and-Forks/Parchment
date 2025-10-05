@@ -1,5 +1,5 @@
 CLASS net/minecraft/client/gui/render/state/pip/GuiBannerResultRenderState
-	METHOD <init> (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/item/DyeColor;Lnet/minecraft/world/level/block/entity/BannerPatternLayers;IIIILnet/minecraft/client/gui/navigation/ScreenRectangle;)V
+	METHOD <init> (Lnet/minecraft/client/model/BannerFlagModel;Lnet/minecraft/world/item/DyeColor;Lnet/minecraft/world/level/block/entity/BannerPatternLayers;IIIILnet/minecraft/client/gui/navigation/ScreenRectangle;)V
 		ARG 1 flag
 		ARG 2 baseColor
 		ARG 3 resultBannerPatterns

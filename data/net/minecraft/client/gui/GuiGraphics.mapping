@@ -6,6 +6,8 @@ CLASS net/minecraft/client/gui/GuiGraphics
 		ARG 1 minecraft
 		ARG 2 pose
 		ARG 3 guiRenderState
+	METHOD applyCursor (Lcom/mojang/blaze3d/platform/Window;)V
+		ARG 1 window
 	METHOD blit (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIFFIIII)V
 		ARG 1 pipeline
 		ARG 2 atlas
@@ -336,6 +338,10 @@ CLASS net/minecraft/client/gui/GuiGraphics
 			COMMENT the starting color of the gradient.
 		ARG 6 colorTo
 			COMMENT the ending color of the gradient.
+	METHOD getSprite (Lnet/minecraft/client/resources/model/Material;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+		ARG 1 material
+	METHOD getSpriteScaling (Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)Lnet/minecraft/client/resources/metadata/gui/GuiSpriteScaling;
+		ARG 0 sprite
 	METHOD guiHeight ()I
 		COMMENT {@return returns the height of the GUI screen in pixels}
 	METHOD guiWidth ()I
@@ -465,18 +471,6 @@ CLASS net/minecraft/client/gui/GuiGraphics
 			COMMENT the y-coordinate of the rendering position.
 		ARG 5 text
 			COMMENT the custom text to display. Can be null.
-	METHOD renderOutline (IIIII)V
-		COMMENT Renders an outline rectangle on the screen with the specified color.
-		ARG 1 x
-			COMMENT the x-coordinate of the top-left corner of the rectangle.
-		ARG 2 y
-			COMMENT the y-coordinate of the top-left corner of the rectangle.
-		ARG 3 width
-			COMMENT the width of the blitted portion.
-		ARG 4 height
-			COMMENT the height of the rectangle.
-		ARG 5 color
-			COMMENT the color of the outline.
 	METHOD renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/ResourceLocation;)V
 		ARG 1 font
 		ARG 2 components
@@ -484,6 +478,8 @@ CLASS net/minecraft/client/gui/GuiGraphics
 		ARG 4 y
 		ARG 5 positioner
 		ARG 6 background
+	METHOD requestCursor (Lcom/mojang/blaze3d/platform/cursor/CursorType;)V
+		ARG 1 cursor
 	METHOD setComponentTooltipForNextFrame (Lnet/minecraft/client/gui/Font;Ljava/util/List;II)V
 		ARG 1 font
 		ARG 2 lines
@@ -558,7 +554,7 @@ CLASS net/minecraft/client/gui/GuiGraphics
 		ARG 5 positioner
 		ARG 6 background
 		ARG 7 focused
-	METHOD submitBannerPatternRenderState (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/item/DyeColor;Lnet/minecraft/world/level/block/entity/BannerPatternLayers;IIII)V
+	METHOD submitBannerPatternRenderState (Lnet/minecraft/client/model/BannerFlagModel;Lnet/minecraft/world/item/DyeColor;Lnet/minecraft/world/level/block/entity/BannerPatternLayers;IIII)V
 		ARG 1 flag
 		ARG 2 baseColor
 		ARG 3 resultBannerPatterns
@@ -609,13 +605,19 @@ CLASS net/minecraft/client/gui/GuiGraphics
 		ARG 9 y1
 	METHOD submitMapRenderState (Lnet/minecraft/client/renderer/state/MapRenderState;)V
 		ARG 1 renderState
+	METHOD submitOutline (IIIII)V
+		ARG 1 x
+		ARG 2 y
+		ARG 3 width
+		ARG 4 height
+		ARG 5 color
 	METHOD submitProfilerChartRenderState (Ljava/util/List;IIII)V
 		ARG 1 chartData
 		ARG 2 x0
 		ARG 3 y0
 		ARG 4 x1
 		ARG 5 y1
-	METHOD submitSignRenderState (Lnet/minecraft/client/model/Model;FLnet/minecraft/world/level/block/state/properties/WoodType;IIII)V
+	METHOD submitSignRenderState (Lnet/minecraft/client/model/Model$Simple;FLnet/minecraft/world/level/block/state/properties/WoodType;IIII)V
 		ARG 1 signModel
 		ARG 2 scale
 		ARG 3 woodType
@@ -634,6 +636,20 @@ CLASS net/minecraft/client/gui/GuiGraphics
 		ARG 8 y0
 		ARG 9 x1
 		ARG 10 y1
+	METHOD submitTiledBlit (Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lcom/mojang/blaze3d/textures/GpuTextureView;IIIIIIFFFFI)V
+		ARG 1 pipeline
+		ARG 2 atlasTexture
+		ARG 3 tileWidth
+		ARG 4 tileHeight
+		ARG 5 x0
+		ARG 6 x1
+		ARG 7 y0
+		ARG 8 y1
+		ARG 9 u0
+		ARG 10 u1
+		ARG 11 v0
+		ARG 12 v1
+		ARG 13 color
 	METHOD textHighlight (IIII)V
 		ARG 1 minX
 		ARG 2 minY
@@ -649,6 +665,9 @@ CLASS net/minecraft/client/gui/GuiGraphics
 			COMMENT the y-coordinate of the end point.
 		ARG 4 color
 			COMMENT the color of the line.
+	CLASS OutlineBox
+		METHOD render (Lnet/minecraft/client/gui/GuiGraphics;)V
+			ARG 1 guiGraphics
 	CLASS ScissorStack
 		COMMENT A utility class for managing a stack of screen rectangles for scissoring.
 		METHOD containsPoint (II)Z

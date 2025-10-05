@@ -31,19 +31,24 @@ CLASS net/minecraft/client/gui/components/EditBox
 		ARG 2 width
 		ARG 3 height
 		ARG 4 message
-	METHOD charTyped (CI)Z
-		ARG 1 codePoint
-		ARG 2 modifiers
+	METHOD addFormatter (Lnet/minecraft/client/gui/components/EditBox$TextFormatter;)V
+		ARG 1 formatter
+	METHOD applyFormat (Ljava/lang/String;I)Lnet/minecraft/util/FormattedCharSequence;
+		ARG 1 text
+		ARG 2 displayPos
 	METHOD deleteChars (I)V
 		COMMENT Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
 		ARG 1 num
 	METHOD deleteCharsToPos (I)V
 		ARG 1 num
-	METHOD deleteText (I)V
-		ARG 1 count
+	METHOD deleteText (IZ)V
+		ARG 1 num
+		ARG 2 words
 	METHOD deleteWords (I)V
 		COMMENT Deletes the given number of words from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
 		ARG 1 num
+	METHOD findClickedPositionInText (Lnet/minecraft/client/input/MouseButtonEvent;)I
+		ARG 1 event
 	METHOD getCursorPos (I)I
 		ARG 1 delta
 	METHOD getCursorPosition ()I
@@ -77,13 +82,6 @@ CLASS net/minecraft/client/gui/components/EditBox
 		COMMENT Gets whether the background and outline of this text box should be drawn (true if so).
 	METHOD isVisible ()Z
 		COMMENT Returns {@code true} if this textbox is visible.
-	METHOD keyPressed (III)Z
-		ARG 1 keyCode
-		ARG 2 scanCode
-		ARG 3 modifiers
-	METHOD lambda$new$0 (Ljava/lang/String;Ljava/lang/Integer;)Lnet/minecraft/util/FormattedCharSequence;
-		ARG 0 text
-		ARG 1 codePoint
 	METHOD moveCursor (IZ)V
 		ARG 1 delta
 		ARG 2 select
@@ -98,6 +96,8 @@ CLASS net/minecraft/client/gui/components/EditBox
 		ARG 1 newText
 	METHOD scrollTo (I)V
 		ARG 1 position
+	METHOD selectWord (Lnet/minecraft/client/input/MouseButtonEvent;)V
+		ARG 1 event
 	METHOD setBordered (Z)V
 		COMMENT Sets whether the background and outline of this text box should be drawn.
 		ARG 1 enableBackgroundDrawing
@@ -113,8 +113,6 @@ CLASS net/minecraft/client/gui/components/EditBox
 		ARG 1 enabled
 	METHOD setFilter (Ljava/util/function/Predicate;)V
 		ARG 1 validator
-	METHOD setFormatter (Ljava/util/function/BiFunction;)V
-		ARG 1 textFormatter
 	METHOD setHighlightPos (I)V
 		COMMENT Sets the position of the selection anchor (the selection anchor and the cursor position mark the edges of the selection). If the anchor is set beyond the bounds of the current text, it will be put back inside.
 		ARG 1 position
@@ -141,3 +139,7 @@ CLASS net/minecraft/client/gui/components/EditBox
 	METHOD setVisible (Z)V
 		COMMENT Sets whether this textbox is visible.
 		ARG 1 isVisible
+	CLASS TextFormatter
+		METHOD format (Ljava/lang/String;I)Lnet/minecraft/util/FormattedCharSequence;
+			ARG 1 text
+			ARG 2 displayPos

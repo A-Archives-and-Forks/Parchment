@@ -3,14 +3,15 @@ CLASS net/minecraft/client/renderer/special/SpecialModelRenderer
 		ARG 1 stack
 	METHOD getExtents (Ljava/util/Set;)V
 		ARG 1 output
-	METHOD render (Ljava/lang/Object;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IIZ)V
-		ARG 1 patterns
+	METHOD submit (Ljava/lang/Object;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;IIZI)V
+		ARG 1 argument
 		ARG 2 displayContext
 		ARG 3 poseStack
-		ARG 4 bufferSource
+		ARG 4 nodeCollector
 		ARG 5 packedLight
 		ARG 6 packedOverlay
-		ARG 7 hasFoilType
+		ARG 7 hasFoil
+		ARG 8 outlineColor
 	CLASS Unbaked
-		METHOD bake (Lnet/minecraft/client/model/geom/EntityModelSet;)Lnet/minecraft/client/renderer/special/SpecialModelRenderer;
-			ARG 1 modelSet
+		METHOD bake (Lnet/minecraft/client/renderer/special/SpecialModelRenderer$BakingContext;)Lnet/minecraft/client/renderer/special/SpecialModelRenderer;
+			ARG 1 context
