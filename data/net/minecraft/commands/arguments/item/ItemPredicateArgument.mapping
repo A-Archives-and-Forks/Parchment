@@ -1,6 +1,8 @@
 CLASS net/minecraft/commands/arguments/item/ItemPredicateArgument
 	METHOD <init> (Lnet/minecraft/commands/CommandBuildContext;)V
 		ARG 1 context
+	METHOD createComponentExistencePredicate (Lnet/minecraft/core/Holder$Reference;)Lnet/minecraft/commands/arguments/item/ItemPredicateArgument$PredicateWrapper;
+		ARG 0 component
 	METHOD getItemPredicate (Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/commands/arguments/item/ItemPredicateArgument$Result;
 		ARG 0 context
 		ARG 1 name
@@ -24,7 +26,7 @@ CLASS net/minecraft/commands/arguments/item/ItemPredicateArgument
 		METHOD <init> (Lnet/minecraft/core/HolderLookup$Provider;)V
 			ARG 1 registries
 	CLASS ComponentWrapper
-		METHOD create (Lcom/mojang/brigadier/ImmutableStringReader;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/core/component/DataComponentType;)Lnet/minecraft/commands/arguments/item/ItemPredicateArgument$ComponentWrapper;
+		METHOD create (Lcom/mojang/brigadier/ImmutableStringReader;Lnet/minecraft/resources/Identifier;Lnet/minecraft/core/component/DataComponentType;)Lnet/minecraft/commands/arguments/item/ItemPredicateArgument$ComponentWrapper;
 			ARG 0 reader
 			ARG 1 id
 			ARG 2 componentType

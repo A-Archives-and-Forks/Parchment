@@ -1,6 +1,12 @@
 CLASS net/minecraft/client/renderer/block/ModelBlockRenderer
 	METHOD <init> (Lnet/minecraft/client/color/block/BlockColors;)V
 		ARG 1 blockColors
+	METHOD calculateShape (Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/client/renderer/block/model/BakedQuad;Lnet/minecraft/client/renderer/block/ModelBlockRenderer$CommonRenderStorage;)V
+		ARG 0 level
+		ARG 1 state
+		ARG 2 pos
+		ARG 3 quad
+		ARG 4 renderStorage
 	METHOD calculateShape (Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;[ILnet/minecraft/core/Direction;Lnet/minecraft/client/renderer/block/ModelBlockRenderer$CommonRenderStorage;)V
 		ARG 0 level
 		ARG 1 state

@@ -27,13 +27,13 @@ CLASS net/minecraft/gametest/framework/TestEnvironmentDefinition
 			METHOD apply (Lnet/minecraft/server/level/ServerLevel;)V
 				ARG 1 level
 	CLASS Functions
-		METHOD lambda$setup$1 (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceLocation;)V
+		METHOD lambda$setup$1 (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/Identifier;)V
 			ARG 1 function
 		METHOD lambda$static$0 (Lcom/mojang/serialization/codecs/RecordCodecBuilder$Instance;)Lcom/mojang/datafixers/kinds/App;
 			ARG 0 instance
-		METHOD lambda$teardown$2 (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceLocation;)V
+		METHOD lambda$teardown$2 (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/Identifier;)V
 			ARG 1 function
-		METHOD run (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceLocation;)V
+		METHOD run (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/Identifier;)V
 			ARG 0 level
 			ARG 1 function
 	CLASS TimeOfDay
@@ -45,6 +45,9 @@ CLASS net/minecraft/gametest/framework/TestEnvironmentDefinition
 			ARG 1 value
 		METHOD lambda$static$0 (Lcom/mojang/serialization/codecs/RecordCodecBuilder$Instance;)Lcom/mojang/datafixers/kinds/App;
 			ARG 0 instance
+		METHOD resetRule (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/gamerules/GameRule;)V
+			ARG 1 level
+			ARG 2 gameRule
 		CLASS Entry
 			METHOD codec (Ljava/lang/Class;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;
 				ARG 0 valueClass

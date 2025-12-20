@@ -24,6 +24,8 @@ CLASS net/minecraft/client/gui/screens/worldselection/WorldCreationUiState
 		ARG 1 gameMode
 	METHOD setGameRules (Lnet/minecraft/world/level/GameRules;)V
 		ARG 1 gameRules
+	METHOD setGameRules (Lnet/minecraft/world/level/gamerules/GameRules;)V
+		ARG 1 gameRules
 	METHOD setGenerateStructures (Z)V
 		ARG 1 generateStructures
 	METHOD setName (Ljava/lang/String;)V

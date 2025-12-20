@@ -6,6 +6,11 @@ CLASS net/minecraft/world/entity/monster/EnderMan
 		ARG 2 damageSource
 		ARG 3 potion
 		ARG 4 damageAmount
+	METHOD hurtWithCleanWater (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/entity/projectile/throwableitemprojectile/AbstractThrownPotion;F)Z
+		ARG 1 level
+		ARG 2 damageSource
+		ARG 3 potion
+		ARG 4 amount
 	METHOD isBeingStaredBy (Lnet/minecraft/world/entity/player/Player;)Z
 		ARG 1 player
 	METHOD onSyncedDataUpdated (Lnet/minecraft/network/syncher/EntityDataAccessor;)V

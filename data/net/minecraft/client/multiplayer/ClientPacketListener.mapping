@@ -50,7 +50,7 @@ CLASS net/minecraft/client/multiplayer/ClientPacketListener
 		COMMENT Updates the players statistics or achievements
 		ARG 1 packet
 	METHOD handleBlockDestruction (Lnet/minecraft/network/protocol/game/ClientboundBlockDestructionPacket;)V
-		COMMENT Updates all registered IWorldAccess instances with destroyBlockInWorldPartially
+		COMMENT Updates all registered {@link Level} instances with destroyBlockProgress
 		ARG 1 packet
 	METHOD handleBlockEntityData (Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;)V
 		COMMENT Updates the NBTTagCompound metadata of instances of the following entitytypes: Mob spawners, command blocks, beacons, skulls, flowerpot
@@ -247,6 +247,8 @@ CLASS net/minecraft/client/multiplayer/ClientPacketListener
 	METHOD sendUnattendedCommand (Ljava/lang/String;Lnet/minecraft/client/gui/screens/Screen;)V
 		ARG 1 command
 		ARG 2 previousScreen
+	METHOD setClientLoaded (Z)V
+		ARG 1 clientLoaded
 	METHOD setKeyPair (Lnet/minecraft/world/entity/player/ProfileKeyPair;)V
 		ARG 1 keyPair
 	METHOD setValuesFromPositionPacket (Lnet/minecraft/world/entity/PositionMoveRotation;Ljava/util/Set;Lnet/minecraft/world/entity/Entity;Z)Z

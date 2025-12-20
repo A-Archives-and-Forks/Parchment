@@ -6,6 +6,8 @@ CLASS com/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab
 	CLASS HeaderEntry
 		METHOD <init> (Lcom/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab;Lnet/minecraft/client/gui/Font;)V
 			ARG 2 font
+		METHOD height (I)I
+			ARG 1 height
 	CLASS PlayerEntry
 		METHOD <init> (Lcom/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab;Lcom/mojang/realmsclient/dto/PlayerInfo;)V
 			ARG 2 playerInfo

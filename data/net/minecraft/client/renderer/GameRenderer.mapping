@@ -36,7 +36,7 @@ CLASS net/minecraft/client/renderer/GameRenderer
 		ARG 1 fov
 	METHOD pick (F)V
 		COMMENT Gets the block or object that is being moused over.
-		ARG 1 partialTicks
+		ARG 1 partialTick
 	METHOD pick (Lnet/minecraft/world/entity/Entity;DDF)Lnet/minecraft/world/phys/HitResult;
 		ARG 1 entity
 		ARG 2 blockInteractionRange
@@ -60,7 +60,9 @@ CLASS net/minecraft/client/renderer/GameRenderer
 		ARG 1 level
 	METHOD setPanoramicMode (Z)V
 		ARG 1 panoramicMode
-	METHOD setPostEffect (Lnet/minecraft/resources/ResourceLocation;)V
+	METHOD setPanoramicScreenshotParameters (Lnet/minecraft/client/renderer/PanoramicScreenshotParameters;)V
+		ARG 1 panoramicScreenshotParameters
+	METHOD setPostEffect (Lnet/minecraft/resources/Identifier;)V
 		ARG 1 postEffectId
 	METHOD setRenderBlockOutline (Z)V
 		ARG 1 renderBlockOutline
@@ -70,3 +72,5 @@ CLASS net/minecraft/client/renderer/GameRenderer
 		COMMENT Updates the entity renderer
 	METHOD tickFov ()V
 		COMMENT Update FOV modifier hand
+	METHOD updateCamera (Lnet/minecraft/client/DeltaTracker;)V
+		ARG 1 deltaTracker

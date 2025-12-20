@@ -57,6 +57,8 @@ CLASS net/minecraft/server/level/ServerPlayer
 		ARG 1 entityHit
 	METHOD deregisterEnderPearl (Lnet/minecraft/world/entity/projectile/ThrownEnderpearl;)V
 		ARG 1 enderPearl
+	METHOD deregisterEnderPearl (Lnet/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl;)V
+		ARG 1 enderPearl
 	METHOD didNotMove (DDD)Z
 		ARG 0 dx
 		ARG 2 dy
@@ -70,6 +72,8 @@ CLASS net/minecraft/server/level/ServerPlayer
 		ARG 1 droppedItem
 		ARG 2 dropAround
 		ARG 3 traceItem
+	METHOD drop (Z)V
+		ARG 1 dropStack
 	METHOD drop (Z)Z
 		ARG 1 dropStack
 			COMMENT Whether to drop the entire stack of items. If {@code false}, drops a single item.
@@ -150,7 +154,11 @@ CLASS net/minecraft/server/level/ServerPlayer
 		ARG 1 key
 	METHOD registerAndUpdateEnderPearlTicket (Lnet/minecraft/world/entity/projectile/ThrownEnderpearl;)J
 		ARG 1 enderPearl
+	METHOD registerAndUpdateEnderPearlTicket (Lnet/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl;)J
+		ARG 1 enderPearl
 	METHOD registerEnderPearl (Lnet/minecraft/world/entity/projectile/ThrownEnderpearl;)V
+		ARG 1 enderPearl
+	METHOD registerEnderPearl (Lnet/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEnderpearl;)V
 		ARG 1 enderPearl
 	METHOD requestDebugSubscriptions (Ljava/util/Set;)V
 		ARG 1 subscriptions
@@ -239,6 +247,8 @@ CLASS net/minecraft/server/level/ServerPlayer
 		ARG 5 z
 	METHOD tick ()V
 		COMMENT Called to update the entity's position/logic.
+	METHOD transferInventoryXpAndScore (Lnet/minecraft/world/entity/player/Player;)V
+		ARG 1 player
 	METHOD triggerDimensionChangeTriggers (Lnet/minecraft/server/level/ServerLevel;)V
 		ARG 1 level
 	METHOD updateInvisibilityStatus ()V

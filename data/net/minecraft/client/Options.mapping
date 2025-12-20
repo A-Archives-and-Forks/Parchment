@@ -2,6 +2,8 @@ CLASS net/minecraft/client/Options
 	METHOD <init> (Lnet/minecraft/client/Minecraft;Ljava/io/File;)V
 		ARG 1 minecraft
 		ARG 2 gameDirectory
+	METHOD applyGraphicsPreset (Lnet/minecraft/client/GraphicsPreset;)V
+		ARG 1 graphicsPreset
 	METHOD broadcastOptions ()V
 		COMMENT Send a client info packet with settings information to the server
 	METHOD createSoundSliderOptionInstance (Ljava/lang/String;Lnet/minecraft/sounds/SoundSource;)Lnet/minecraft/client/OptionInstance;
@@ -56,6 +58,8 @@ CLASS net/minecraft/client/Options
 		ARG 1 resourcePackList
 	METHOD logMouse (I)D
 		ARG 0 input
+	METHOD operateOnLevelRenderer (Ljava/util/function/Consumer;)V
+		ARG 0 action
 	METHOD percentValueLabel (Lnet/minecraft/network/chat/Component;D)Lnet/minecraft/network/chat/Component;
 		ARG 0 text
 		ARG 1 value

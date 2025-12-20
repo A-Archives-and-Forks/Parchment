@@ -6,7 +6,7 @@ CLASS net/minecraft/server/level/ChunkMap
 	FIELD updatingChunkMap Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
 		COMMENT Chunks in memory. This should only ever be manipulated by the main thread.
 	FIELD visibleChunkMap Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
-		COMMENT Same as {@link #loadedChunks}, but immutable for access from other threads. <em>This should never be mutated.</em>
+		COMMENT Same as {@link #updatingChunkMap}, but immutable for access from other threads. <em>This should never be mutated.</em>
 	METHOD <init> (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager;Ljava/util/concurrent/Executor;Lnet/minecraft/util/thread/BlockableEventLoop;Lnet/minecraft/world/level/chunk/LightChunkGetter;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/world/level/entity/ChunkStatusUpdateListener;Ljava/util/function/Supplier;Lnet/minecraft/world/level/TicketStorage;IZ)V
 		ARG 1 level
 		ARG 2 storageSource
@@ -29,6 +29,9 @@ CLASS net/minecraft/server/level/ChunkMap
 		ARG 1 chunkPos
 	METHOD anyPlayerCloseEnoughForSpawningInternal (Lnet/minecraft/world/level/ChunkPos;)Z
 		ARG 1 chunkPos
+	METHOD anyPlayerCloseEnoughTo (Lnet/minecraft/core/BlockPos;I)Z
+		ARG 1 pos
+		ARG 2 distance
 	METHOD applyChunkTrackingView (Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/level/ChunkTrackingView;)V
 		ARG 1 player
 		ARG 2 chunkTrackingView
@@ -54,6 +57,9 @@ CLASS net/minecraft/server/level/ChunkMap
 		ARG 2 action
 	METHOD forEachReadyToSendChunk (Ljava/util/function/Consumer;)V
 		ARG 1 action
+	METHOD getChunkDataFixContextTag (Lnet/minecraft/resources/ResourceKey;Ljava/util/Optional;)Lnet/minecraft/nbt/CompoundTag;
+		ARG 0 level
+		ARG 1 generatorKey
 	METHOD getChunkDebugData (Lnet/minecraft/world/level/ChunkPos;)Ljava/lang/String;
 		ARG 1 pos
 	METHOD getChunkQueueLevel (J)Ljava/util/function/IntSupplier;
@@ -150,6 +156,10 @@ CLASS net/minecraft/server/level/ChunkMap
 	METHOD playerIsCloseEnoughForSpawning (Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/ChunkPos;)Z
 		ARG 1 player
 		ARG 2 chunkPos
+	METHOD playerIsCloseEnoughTo (Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/phys/Vec3;I)Z
+		ARG 1 player
+		ARG 2 pos
+		ARG 3 distance
 	METHOD prepareAccessibleChunk (Lnet/minecraft/server/level/ChunkHolder;)Ljava/util/concurrent/CompletableFuture;
 		ARG 1 chunk
 	METHOD prepareEntityTickingChunk (Lnet/minecraft/server/level/ChunkHolder;)Ljava/util/concurrent/CompletableFuture;
@@ -159,7 +169,7 @@ CLASS net/minecraft/server/level/ChunkMap
 	METHOD printFuture (Ljava/util/concurrent/CompletableFuture;)Ljava/lang/String;
 		ARG 0 future
 	METHOD processUnloads (Ljava/util/function/BooleanSupplier;)V
-		ARG 1 hasMoreTime
+		ARG 1 hasTimeLeft
 	METHOD readChunk (Lnet/minecraft/world/level/ChunkPos;)Ljava/util/concurrent/CompletableFuture;
 		ARG 1 pos
 	METHOD removeEntity (Lnet/minecraft/world/entity/Entity;)V
@@ -176,7 +186,7 @@ CLASS net/minecraft/server/level/ChunkMap
 		ARG 1 chunk
 		ARG 2 gametime
 	METHOD saveChunksEagerly (Ljava/util/function/BooleanSupplier;)V
-		ARG 1 hasMoreTime
+		ARG 1 hasTimeLeft
 	METHOD scheduleChunkLoad (Lnet/minecraft/world/level/ChunkPos;)Ljava/util/concurrent/CompletableFuture;
 		ARG 1 chunkPos
 	METHOD scheduleUnload (JLnet/minecraft/server/level/ChunkHolder;)V
@@ -199,7 +209,7 @@ CLASS net/minecraft/server/level/ChunkMap
 	METHOD skipPlayer (Lnet/minecraft/server/level/ServerPlayer;)Z
 		ARG 1 player
 	METHOD tick (Ljava/util/function/BooleanSupplier;)V
-		ARG 1 hasMoreTime
+		ARG 1 hasTimeLeft
 	METHOD updateChunkScheduling (JILnet/minecraft/server/level/ChunkHolder;I)Lnet/minecraft/server/level/ChunkHolder;
 		COMMENT Sets level and loads/unloads chunk.
 		ARG 1 chunkPos

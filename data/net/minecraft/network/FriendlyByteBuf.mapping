@@ -286,7 +286,7 @@ CLASS net/minecraft/network/FriendlyByteBuf
 		ARG 0 buffer
 	METHOD readResourceKey (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/resources/ResourceKey;
 		ARG 1 registryKey
-	METHOD readResourceLocation ()Lnet/minecraft/resources/ResourceLocation;
+	METHOD readResourceLocation ()Lnet/minecraft/resources/Identifier;
 		COMMENT Read a ResourceLocation using its String representation.
 		COMMENT
 		COMMENT @see #writeResourceLocation
@@ -294,6 +294,9 @@ CLASS net/minecraft/network/FriendlyByteBuf
 		ARG 1 length
 	METHOD readSlice (I)Lio/netty/buffer/ByteBuf;
 		ARG 1 length
+	METHOD readString (ILjava/nio/charset/Charset;)Ljava/lang/String;
+		ARG 1 length
+		ARG 2 charset
 	METHOD readUUID ()Ljava/util/UUID;
 		COMMENT Reads a UUID encoded as two longs from this buffer.
 		COMMENT
@@ -341,6 +344,8 @@ CLASS net/minecraft/network/FriendlyByteBuf
 	METHOD readWithCount (Ljava/util/function/Consumer;)V
 		COMMENT Read a VarInt N from this buffer, then reads N values by calling {@code reader}.
 		ARG 1 reader
+	METHOD readerIndex (I)Lio/netty/buffer/ByteBuf;
+		ARG 1 index
 	METHOD readerIndex (I)Lnet/minecraft/network/FriendlyByteBuf;
 		ARG 1 readerIndex
 	METHOD release (I)Z
@@ -405,6 +410,9 @@ CLASS net/minecraft/network/FriendlyByteBuf
 	METHOD setFloat (IF)Lnet/minecraft/network/FriendlyByteBuf;
 		ARG 1 index
 		ARG 2 value
+	METHOD setIndex (II)Lio/netty/buffer/ByteBuf;
+		ARG 1 reader
+		ARG 2 writer
 	METHOD setIndex (II)Lnet/minecraft/network/FriendlyByteBuf;
 		ARG 1 readerIndex
 		ARG 2 writerIndex
@@ -557,6 +565,8 @@ CLASS net/minecraft/network/FriendlyByteBuf
 		ARG 1 value
 	METHOD writeGlobalPos (Lnet/minecraft/core/GlobalPos;)V
 		ARG 1 pos
+	METHOD writeIdentifier (Lnet/minecraft/resources/Identifier;)Lnet/minecraft/network/FriendlyByteBuf;
+		ARG 1 id
 	METHOD writeInstant (Ljava/time/Instant;)V
 		ARG 1 instant
 	METHOD writeInt (I)Lnet/minecraft/network/FriendlyByteBuf;
@@ -613,11 +623,14 @@ CLASS net/minecraft/network/FriendlyByteBuf
 	METHOD writeQuaternion (Lio/netty/buffer/ByteBuf;Lorg/joml/Quaternionf;)V
 		ARG 0 buffer
 		ARG 1 quaternion
+	METHOD writeQuaternion (Lio/netty/buffer/ByteBuf;Lorg/joml/Quaternionfc;)V
+		ARG 0 buffer
+		ARG 1 quaternion
 	METHOD writeQuaternion (Lorg/joml/Quaternionf;)V
 		ARG 1 quaternion
 	METHOD writeResourceKey (Lnet/minecraft/resources/ResourceKey;)V
 		ARG 1 resourceKey
-	METHOD writeResourceLocation (Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/network/FriendlyByteBuf;
+	METHOD writeResourceLocation (Lnet/minecraft/resources/Identifier;)Lnet/minecraft/network/FriendlyByteBuf;
 		COMMENT Write a ResourceLocation using its String representation.
 		COMMENT
 		COMMENT @see #readResourceLocation
@@ -664,6 +677,9 @@ CLASS net/minecraft/network/FriendlyByteBuf
 	METHOD writeVector3f (Lio/netty/buffer/ByteBuf;Lorg/joml/Vector3f;)V
 		ARG 0 buffer
 		ARG 1 vector3f
+	METHOD writeVector3f (Lio/netty/buffer/ByteBuf;Lorg/joml/Vector3fc;)V
+		ARG 0 buffer
+		ARG 1 vector3f
 	METHOD writeVector3f (Lorg/joml/Vector3f;)V
 		ARG 1 vector3f
 	METHOD writeWithCodec (Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)Lnet/minecraft/network/FriendlyByteBuf;
@@ -672,5 +688,7 @@ CLASS net/minecraft/network/FriendlyByteBuf
 		ARG 3 value
 	METHOD writeZero (I)Lnet/minecraft/network/FriendlyByteBuf;
 		ARG 1 length
+	METHOD writerIndex (I)Lio/netty/buffer/ByteBuf;
+		ARG 1 index
 	METHOD writerIndex (I)Lnet/minecraft/network/FriendlyByteBuf;
 		ARG 1 writerIndex

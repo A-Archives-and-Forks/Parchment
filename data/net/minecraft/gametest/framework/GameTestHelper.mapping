@@ -78,11 +78,16 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 		ARG 1 pos
 		ARG 2 type
 		ARG 3 entityDataGetter
-		ARG 4 testEntityData
+		ARG 4 expectedValue
 	METHOD assertEntityData (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntityType;Ljava/util/function/Predicate;)V
 		ARG 1 pos
 		ARG 2 type
 		ARG 3 predicate
+	METHOD assertEntityData (Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/entity/EntityType;Ljava/util/function/Function;Ljava/lang/Object;)V
+		ARG 1 area
+		ARG 2 type
+		ARG 3 entityDataGetter
+		ARG 4 expectedValue
 	METHOD assertEntityInstancePresent (Lnet/minecraft/world/entity/Entity;III)V
 		ARG 1 entity
 		ARG 2 x
@@ -138,6 +143,10 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 	METHOD assertEntityPresent (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/phys/AABB;)V
 		ARG 1 type
 		ARG 2 box
+	METHOD assertEntityPresent (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/network/chat/Component;)V
+		ARG 1 type
+		ARG 2 box
+		ARG 3 message
 	METHOD assertEntityProperty (Lnet/minecraft/world/entity/Entity;Ljava/util/function/Function;Ljava/lang/Object;Lnet/minecraft/network/chat/Component;)V
 		ARG 1 entity
 		ARG 2 valueGetter
@@ -152,6 +161,9 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 		ARG 2 x
 		ARG 4 y
 		ARG 6 z
+	METHOD assertFalse (ZLjava/lang/String;)V
+		ARG 1 condition
+		ARG 2 message
 	METHOD assertFalse (ZLnet/minecraft/network/chat/Component;)V
 		ARG 1 condition
 		ARG 2 message
@@ -187,9 +199,16 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 	METHOD assertSameBlockStates (Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Lnet/minecraft/core/BlockPos;)V
 		ARG 1 boundingBox
 		ARG 2 pos
+	METHOD assertTrue (ZLjava/lang/String;)V
+		ARG 1 condition
+		ARG 2 message
 	METHOD assertTrue (ZLnet/minecraft/network/chat/Component;)V
 		ARG 1 condition
 		ARG 2 message
+	METHOD assertValueEqual (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/String;)V
+		ARG 1 expected
+		ARG 2 actual
+		ARG 3 name
 	METHOD assertValueEqual (Ljava/lang/Object;Ljava/lang/Object;Lnet/minecraft/network/chat/Component;)V
 		ARG 1 expected
 		ARG 2 actual
@@ -242,6 +261,8 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 		ARG 1 type
 	METHOD forEveryBlockInStructure (Ljava/util/function/Consumer;)V
 		ARG 1 consumer
+	METHOD getAbsoluteDirection (Lnet/minecraft/core/Direction;)Lnet/minecraft/core/Direction;
+		ARG 1 direction
 	METHOD getBlockEntity (Lnet/minecraft/core/BlockPos;Ljava/lang/Class;)Lnet/minecraft/world/level/block/entity/BlockEntity;
 		ARG 1 pos
 		ARG 2 clazz
@@ -287,6 +308,18 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 		ARG 1 state
 	METHOD lambda$assertEntityInstancePresent$17 (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Z
 		ARG 1 currentEntity
+	METHOD lambda$assertEntityNotTouching$24 (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)Z
+		ARG 1 entity
+	METHOD lambda$assertEntityTouching$23 (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)Z
+		ARG 1 entity
+	METHOD lambda$assertItemEntityNotPresent$20 (Lnet/minecraft/world/item/Item;Lnet/minecraft/world/entity/item/ItemEntity;)Z
+		ARG 1 itemEntity
+	METHOD lambda$assertItemEntityNotPresent$22 (Lnet/minecraft/world/item/Item;Lnet/minecraft/world/entity/item/ItemEntity;)Z
+		ARG 1 itemEntity
+	METHOD lambda$assertItemEntityPresent$19 (Lnet/minecraft/world/item/Item;Lnet/minecraft/world/entity/item/ItemEntity;)Z
+		ARG 1 itemEntity
+	METHOD lambda$assertItemEntityPresent$21 (Lnet/minecraft/world/item/Item;Lnet/minecraft/world/entity/item/ItemEntity;)Z
+		ARG 1 itemEntity
 	METHOD lambda$findClosestEntity$2 (Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)I
 		ARG 1 first
 		ARG 2 second
@@ -379,6 +412,12 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
+	METHOD spawn (Lnet/minecraft/world/entity/EntityType;IIILnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Mob;
+		ARG 1 type
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
+		ARG 5 reason
 	METHOD spawn (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/entity/Entity;
 		ARG 1 type
 		ARG 2 pos
@@ -393,6 +432,10 @@ CLASS net/minecraft/gametest/framework/GameTestHelper
 		ARG 1 type
 		ARG 2 pos
 		ARG 3 count
+	METHOD spawn (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+		ARG 1 type
+		ARG 2 pos
+		ARG 3 reason
 	METHOD spawnItem (Lnet/minecraft/world/item/Item;FFF)Lnet/minecraft/world/entity/item/ItemEntity;
 		ARG 1 item
 		ARG 2 x

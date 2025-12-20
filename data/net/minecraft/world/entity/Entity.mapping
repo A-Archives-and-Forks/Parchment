@@ -292,6 +292,9 @@ CLASS net/minecraft/world/entity/Entity
 	METHOD getRelativePortalPosition (Lnet/minecraft/core/Direction$Axis;Lnet/minecraft/BlockUtil$FoundRectangle;)Lnet/minecraft/world/phys/Vec3;
 		ARG 1 axis
 		ARG 2 portal
+	METHOD getRelativePortalPosition (Lnet/minecraft/core/Direction$Axis;Lnet/minecraft/util/BlockUtil$FoundRectangle;)Lnet/minecraft/world/phys/Vec3;
+		ARG 1 axis
+		ARG 2 rectangle
 	METHOD getRopeHoldPosition (F)Lnet/minecraft/world/phys/Vec3;
 		ARG 1 partialTicks
 	METHOD getRotationVector ()Lnet/minecraft/world/phys/Vec2;

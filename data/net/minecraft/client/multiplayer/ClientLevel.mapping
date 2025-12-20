@@ -32,6 +32,8 @@ CLASS net/minecraft/client/multiplayer/ClientLevel
 		ARG 2 direction
 	METHOD addEntity (Lnet/minecraft/world/entity/Entity;)V
 		ARG 1 entity
+	METHOD addEnvironmentAttributeLayers (Lnet/minecraft/world/attribute/EnvironmentAttributeSystem$Builder;)Lnet/minecraft/world/attribute/EnvironmentAttributeSystem$Builder;
+		ARG 1 builder
 	METHOD addMapData (Ljava/util/Map;)V
 		ARG 1 map
 	METHOD addParticle (Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
@@ -85,11 +87,17 @@ CLASS net/minecraft/client/multiplayer/ClientLevel
 		COMMENT Gets the world's chunk provider
 	METHOD getCloudColor (F)I
 		ARG 1 partialTick
+	METHOD getCloudColor (FLnet/minecraft/client/Camera;)I
+		ARG 1 partialTick
+		ARG 2 camera
 	METHOD getEntity (I)Lnet/minecraft/world/entity/Entity;
 		COMMENT Returns the Entity with the given ID, or null if it doesn't exist in this World.
 		ARG 1 id
 	METHOD getLevelData ()Lnet/minecraft/client/multiplayer/ClientLevel$ClientLevelData;
 		COMMENT Returns the world's WorldInfo object
+	METHOD getSkyColor (Lnet/minecraft/client/Camera;F)I
+		ARG 1 camera
+		ARG 2 partialTick
 	METHOD getSkyColor (Lnet/minecraft/world/phys/Vec3;F)I
 		ARG 1 cameraPosition
 		ARG 2 partialTick
@@ -116,6 +124,10 @@ CLASS net/minecraft/client/multiplayer/ClientLevel
 		ARG 1 pos
 	METHOD lambda$new$2 (Lnet/minecraft/core/BlockPos;)I
 		ARG 1 pos
+	METHOD lambda$new$3 (Lnet/minecraft/core/BlockPos;)I
+		ARG 1 pos
+	METHOD lambda$new$4 (Lit/unimi/dsi/fastutil/objects/Object2ObjectArrayMap;)V
+		ARG 1 map
 	METHOD onChunkLoaded (Lnet/minecraft/world/level/ChunkPos;)V
 		ARG 1 chunkPos
 	METHOD onSectionBecomingNonEmpty (J)V

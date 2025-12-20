@@ -10,12 +10,20 @@ CLASS net/minecraft/client/resources/model/ModelBakery
 	METHOD bakeModels (Lnet/minecraft/client/resources/model/SpriteGetter;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;
 		ARG 1 sprites
 		ARG 2 executor
-	METHOD lambda$static$0 (I)Lnet/minecraft/resources/ResourceLocation;
+	METHOD lambda$static$0 (I)Lnet/minecraft/resources/Identifier;
 		ARG 0 index
 	CLASS MissingModels
 		METHOD bake (Lnet/minecraft/client/resources/model/ResolvedModel;Lnet/minecraft/client/resources/model/SpriteGetter;)Lnet/minecraft/client/resources/model/ModelBakery$MissingModels;
 			ARG 0 model
 			ARG 1 sprites
+		METHOD bake (Lnet/minecraft/client/resources/model/ResolvedModel;Lnet/minecraft/client/resources/model/SpriteGetter;Lnet/minecraft/client/resources/model/ModelBaker$PartCache;)Lnet/minecraft/client/resources/model/ModelBakery$MissingModels;
+			ARG 0 model
+			ARG 1 sprites
+			ARG 2 partCache
 	CLASS ModelBakerImpl
 		METHOD <init> (Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/resources/model/SpriteGetter;)V
 			ARG 2 sprites
+		METHOD <init> (Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/resources/model/SpriteGetter;Lnet/minecraft/client/resources/model/ModelBaker$PartCache;Lnet/minecraft/client/resources/model/ModelBakery$MissingModels;)V
+			ARG 2 sprites
+			ARG 3 parts
+			ARG 4 missingModels
